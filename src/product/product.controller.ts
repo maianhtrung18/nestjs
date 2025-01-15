@@ -12,7 +12,9 @@ import {
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { PrismaClient } from '@prisma/client';
 
+const prisma = new PrismaClient();
 @Controller('product/:uid')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
@@ -21,7 +23,8 @@ export class ProductController {
   getDemo(@Req() req, @Query('uname') uname, @Param('uid') uid, @Body() body) {
     // let { uname } = req.query;
     // let { uid } = req.params;
-    return { uname, uid, body };
+    const customer = prisma.customers.findMany();
+    return customer;
   }
 
   @Post()
